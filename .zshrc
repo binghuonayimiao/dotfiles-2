@@ -54,7 +54,7 @@ eval "$(anyenv init - zsh)"
 
 # aliases
 
-alias gh='ghq'
+alias gh='ghq get'
 alias SZ='source ~/.zshrc'
 
 source ~/.zplug/init.zsh
