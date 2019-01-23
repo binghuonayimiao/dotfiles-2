@@ -43,6 +43,10 @@ mkcd() {
     cd $1
 }
 
+# anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init - zsh)"
+
 # Autostart if not already in tmux.
 # if [[ ! -n $TMUX ]]; then
 #   tmux new-session
@@ -51,7 +55,7 @@ mkcd() {
 # aliases
 
 alias gh='ghq'
-alias sZsh='source ~/.zshrc'
+alias SZ='source ~/.zshrc'
 
 source ~/.zplug/init.zsh
 
