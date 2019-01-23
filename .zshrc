@@ -47,6 +47,9 @@ mkcd() {
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init - zsh)"
 
+# linuxbrew
+export PATH='/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin':"$PATH"
+
 # Autostart if not already in tmux.
 # if [[ ! -n $TMUX ]]; then
 #   tmux new-session
