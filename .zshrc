@@ -65,7 +65,7 @@ export PATH='/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin':"$P
 # aliases
 
 alias gh='ghq get'
-alias SZ='source ~/.zshrc
+alias SZ='source ~/.zshrc'
 
 source ~/.zplug/init.zsh
 
