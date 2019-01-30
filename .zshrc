@@ -127,5 +127,3 @@ fi
 
 # コマンドをリンクして、PATH に追加し、プラグインは読み込む
 zplug load --verbose
-
-screenfetch
