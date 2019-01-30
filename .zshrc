@@ -78,6 +78,25 @@ zplug "mollifier/cd-gitroot"
 zplug "mollifier/anyframe"
 zplug "zsh-users/zsh-completions"
 
+# テーマファイルを読み込む
+# zplug "dracula/zsh", as:theme
+# zplug "agkozak/agkozak-zsh-prompt"
+
+zplug denysdovhan/spaceship-prompt, use:spaceship.zsh, from:github, as:theme
+
+SPACESHIP_DIR_TRUNC=0
+SPACESHIP_DIR_TRUNC_REPO=false
+SPACESHIP_PROMPT_DEFAULT_PREFIX=( )
+
+SPACESHIP_GIT_PREFIX=( )
+
+SPACESHIP_PACKAGE_PREFIX=( )
+
+SPACESHIP_EXEC_TIME_PREFIX=( )
+SPACESHIP_EXEC_TIME_ELAPSED=0
+
+SPACESHIP_PROMPT_ORDER=(dir line_sep package node ruby elixir golang php rust haskell docker venv conda pyenv exit_code exec_time git line_sep char)
+
 zplug "tsub/f4036e067a59b242a161fc3c8a5f01dd", from:gist # history-fzf.zsh
 zplug "tsub/81ac9b881cf2475977c9cb619021ef3c", from:gist # ssh-fzf.zsh
 zplug "tsub/90e63082aa227d3bd7eb4b535ade82a0", from:gist # git-branch-fzf.zsh
@@ -110,10 +129,6 @@ zplug "stedolan/jq", \
     rename-to:jq
 zplug "b4b4r07/emoji-cli", \
     on:"stedolan/jq"
-
-# テーマファイルを読み込む
-# zplug "dracula/zsh", as:theme
-zplug "agkozak/agkozak-zsh-prompt"
 
 # 未インストール項目をインストールする
 if ! zplug check --verbose; then
