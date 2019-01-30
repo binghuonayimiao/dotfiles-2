@@ -62,6 +62,11 @@ eval "$(anyenv init - zsh)"
 # linuxbrew
 export PATH='/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin':"$PATH"
 
+# aliases
+
+alias gh='ghq get'
+alias SZ='source ~/.zshrc
+
 source ~/.zplug/init.zsh
 
 # 読み込み順序を設定する
