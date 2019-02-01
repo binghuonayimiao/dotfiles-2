@@ -110,41 +110,12 @@ zplug "b4b4r07/emoji-cli", \
 
 # テーマファイルを読み込む
 # zplug "dracula/zsh", as:theme
-# zplug "agkozak/agkozak-zsh-prompt"
+zplug "agkozak/agkozak-zsh-prompt"
 
-zplug denysdovhan/spaceship-prompt, use:spaceship.zsh, from:github, as:theme
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
-SPACESHIP_DIR_TRUNC=0
-SPACESHIP_DIR_TRUNC_REPO=false
-SPACESHIP_PROMPT_DEFAULT_PREFIX=( )
-
-SPACESHIP_GIT_PREFIX=( )
-
-SPACESHIP_PACKAGE_PREFIX=( )
-
-SPACESHIP_EXEC_TIME_PREFIX=( )
-SPACESHIP_EXEC_TIME_ELAPSED=0
-
-SPACESHIP_PROMPT_ORDER=(dir line_sep package node ruby elixir golang php rust haskell docker venv conda pyenv exit_code exec_time git line_sep char)
-
-<< comment
-
-setopt prompt_subst # Make sure prompt is able to be generated properly.
-zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3 # defer until other plugins like oh-my-zsh is loaded
-
-BULLETTRAIN_PROMPT_ORDER=(dir git status virtualenv nvm ruby go)
-
-comment
-
-# 未インストール項目をインストールする
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-# zplug 'zplug/zplug', hook-build:'zplug --self-manage
+AGKOZAK_LEFT_PROMPT_ONLY=1
+AGKOZAK_PROMPT_DIRTRIM=0
 
 # コマンドをリンクして、PATH に追加し、プラグインは読み込む
 zplug load --verbose
