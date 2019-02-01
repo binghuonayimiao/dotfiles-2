@@ -49,6 +49,7 @@ eval "$(anyenv init - zsh)"
 
 # linuxbrew
 export PATH='/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin':"$PATH"
+umask 002
 
 # Autostart if not already in tmux.
 # if [[ ! -n $TMUX ]]; then
@@ -147,5 +148,3 @@ fi
 
 # コマンドをリンクして、PATH に追加し、プラグインは読み込む
 zplug load --verbose
-
-neofetch
