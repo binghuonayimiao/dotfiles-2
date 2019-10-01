@@ -69,16 +69,15 @@ eval "$(anyenv init - zsh)"
 # 読み込み順序を設定する
 # 例: "zsh-syntax-highlighting" は compinit の後に読み込まれる必要がある
 # (2 以上は compinit 後に読み込まれるようになる)
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "mollifier/cd-gitroot"
-zplug "mollifier/anyframe"
-zplug "zsh-users/zsh-completions"
-
-zplug "tsub/f4036e067a59b242a161fc3c8a5f01dd", from:gist # history-fzf.zsh
-zplug "tsub/81ac9b881cf2475977c9cb619021ef3c", from:gist # ssh-fzf.zsh
-zplug "tsub/90e63082aa227d3bd7eb4b535ade82a0", from:gist # git-branch-fzf.zsh
-zplug "tsub/29bebc4e1e82ad76504b1287b4afba7c", from:gist # tree-fzf.zsh
+zplugin light "zsh-users/zsh-syntax-highlighting"
+zplugin light "zsh-users/zsh-history-substring-search"
+zplugin light "mollifier/cd-gitroot"
+zplugin light "mollifier/anyframe"
+zplugin light "zsh-users/zsh-completions"
+# zplugin light "tsub/f4036e067a59b242a161fc3c8a5f01dd" # history-fzf.zsh
+# zplugin light "tsub/81ac9b881cf2475977c9cb619021ef3c" # ssh-fzf.zsh
+# zplugin light "tsub/90e63082aa227d3bd7eb4b535ade82a0" # git-branch-fzf.zsh
+# zplugin light "tsub/29bebc4e1e82ad76504b1287b4afba7c" # tree-fzf.zsh
 
 ghq-fzf() {
     local selected_dir=$(ghq list | fzf --query="$LBUFFER")
@@ -92,6 +91,65 @@ ghq-fzf() {
 
 zle -N ghq-fzf
 bindkey "^g" ghq-fzf
+
+function history-fzf() {
+    local tac
+
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+
+    BUFFER=$(history -n 1 | eval $tac | fzf --query "$LBUFFER")
+    CURSOR=$#BUFFER
+
+zle reset-prompt
+}
+
+zle -N history-fzf
+bindkey '^r' history-fzf
+
+function ssh-fzf () {
+    local selected_host=$(grep "Host " ~/.ssh/config | grep -v '*' | cut -b 6- | fzf --query "$LBUFFER")
+
+    if [ -n "$selected_host" ]; then
+        BUFFER="ssh ${selected_host}"
+        zle accept-line
+    fi
+    zle reset-prompt
+}
+
+zle -N ssh-fzf
+bindkey '^\' ssh-fzf
+
+function git-branch-fzf() {
+    local selected_branch=$(git for-each-ref --format='%(refname)' --sort=-committerdate refs/heads | perl -pne 's{^refs/heads/}{}' | fzf --query "$LBUFFER")
+
+    if [ -n "$selected_branch" ]; then
+        BUFFER="git checkout ${selected_branch}"
+        zle accept-line
+    fi
+
+    zle reset-prompt
+}
+
+zle -N git-branch-fzf
+bindkey "^b" git-branch-fzf
+
+function tree-fzf() {
+    local SELECTED_FILE=$(tree --charset=o -f | fzf --query "$LBUFFER" | tr -d '\||`|-' | xargs echo)
+
+    if [ "$SELECTED_FILE" != "" ]; then
+        BUFFER="$EDITOR $SELECTED_FILE"
+        zle accept-line
+    fi
+
+    zle reset-prompt
+}
+
+zle -N tree-fzf
+bindkey "^t" tree-fzf
 
 function precmd() {
     if [ ! -z $TMUX ]; then
@@ -107,18 +165,12 @@ zplug "junegunn/fzf-bin"
 
 # 依存管理
 # "emoji-cli" は "jq" があるときにのみ読み込まれる
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-zplug "b4b4r07/emoji-cli", \
-    on:"stedolan/jq"
 
 # テーマファイルを読み込む
 # zplug "dracula/zsh", as:theme
 # zplug "agkozak/agkozak-zsh-prompt"
 
-zplug denysdovhan/spaceship-prompt, use:spaceship.zsh, from:github, as:theme
+zplugin light "denysdovhan/spaceship-prompt"
 
 SPACESHIP_DIR_TRUNC=0
 SPACESHIP_DIR_TRUNC_REPO=false
@@ -165,3 +217,9 @@ export NVIM_CACHE_HOME="$HOME/.vim/bundles"
 export EDITOR=nvim
 
 neofetch --disable cpu gpu memory
+
+### Added by Zplugin's installer
+source '/home/peacock/.zplugin/bin/zplugin.zsh'
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin installer's chunk
