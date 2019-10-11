@@ -209,7 +209,6 @@ zplug load --verbose
 
 # opam configuration
 test -r /home/peacock/.opam/opam-init/init.zsh && . /home/peacock/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # neovim
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -218,8 +217,6 @@ export EDITOR=nvim
 
 neofetch --disable cpu gpu memory
 
-### Added by Zplugin's installer
-source '/home/peacock/.zplugin/bin/zplugin.zsh'
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
-### End of Zplugin installer's chunk
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
