@@ -50,7 +50,6 @@ fi
 
 # aliases
 
-alias gh='ghq get'
 alias SZ='source ~/.zshrc'
 
 source ~/.zplug/init.zsh
@@ -65,8 +64,9 @@ export PATH="$PATH:$GOPATH/bin"
 # 読み込み順序を設定する
 # 例: "zsh-syntax-highlighting" は compinit の後に読み込まれる必要がある
 # (2 以上は compinit 後に読み込まれるようになる)
-zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
 zplug "mollifier/cd-gitroot"
 zplug "mollifier/anyframe"
 zplug "zsh-users/zsh-completions"
@@ -169,32 +169,8 @@ zplug "b4b4r07/emoji-cli", \
     on:"stedolan/jq"
 
 # テーマファイルを読み込む
-# zplug "dracula/zsh", as:theme
-# zplug "agkozak/agkozak-zsh-prompt"
 
-zplug denysdovhan/spaceship-prompt, use:spaceship.zsh, from:github, as:theme
-
-SPACESHIP_DIR_TRUNC=0
-SPACESHIP_DIR_TRUNC_REPO=false
-SPACESHIP_PROMPT_DEFAULT_PREFIX=( )
-
-SPACESHIP_GIT_PREFIX=( )
-
-SPACESHIP_PACKAGE_PREFIX=( )
-
-SPACESHIP_EXEC_TIME_PREFIX=( )
-SPACESHIP_EXEC_TIME_ELAPSED=0
-
-SPACESHIP_PROMPT_ORDER=(dir package venv exit_code line_sep exec_time char)
-
-<< comment
-
-setopt prompt_subst # Make sure prompt is able to be generated properly.
-zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3 # defer until other plugins like oh-my-zsh is loaded
-
-BULLETTRAIN_PROMPT_ORDER=(dir git status virtualenv nvm ruby go)
-
-comment
+zplug romkatv/powerlevel10k, as:theme, depth:1
 
 # 未インストール項目をインストールする
 if ! zplug check --verbose; then
@@ -217,11 +193,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export NVIM_CACHE_HOME="$HOME/.vim/bundles"
 export EDITOR=nvim
 
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+#anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+
+zplug "~/dotfiles/bin/lazy_loads.zsh", from:local, lazy:true
 
 neofetch --disable cpu gpu memory
 
-. $HOME/.asdf/asdf.sh
-
-. $HOME/.asdf/completions/asdf.bash
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
